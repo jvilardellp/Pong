@@ -9,6 +9,7 @@ const screenWidth = 800;
 const screenHeight = 600;
 const black = rl.Color.black;
 const white = rl.Color.white;
+const sizeFontNet = 30;
 
 // 3. ESTRUCTURAS DE DATOS (Modelos)
 // Definir los 'objetos' del juego:
@@ -52,5 +53,11 @@ pub fn main() !void {
         rl.drawLine(screenWidth / 4, 0, screenWidth / 4, screenHeight, rl.Color.red);
         rl.drawLine((screenWidth / 4) * 3, 0, (screenWidth / 4) * 3, screenHeight, rl.Color.red);
         rl.drawLine(0, screenHeight / 2, screenWidth, screenHeight / 2, rl.Color.red);
+
+        // Dibujar red
+        for (0..screenHeight / (sizeFontNet * 2)) |i| {
+            const y: i32 = @intCast(i * 60);
+            rl.drawText("|", screenWidth / 2, y, sizeFontNet, white);
+        }
     }
 }
