@@ -10,12 +10,29 @@ const screenHeight = 600;
 const black = rl.Color.black;
 const white = rl.Color.white;
 const sizeFontNet = 30;
+const sizeFontScore = 60;
 
 // 3. ESTRUCTURAS DE DATOS (Modelos)
 // Definir los 'objetos' del juego:
 // - Estructura Paddle (posición, dimensiones, velocidad)
 // - Estructura Ball (posición, velocidad, radio)
 // - Estructura Game State (puntuación, estado de pausa, objetos de arriba)
+const GameState = struct {
+    // Reservamos 2 bytes: el carácter y el terminador nulo \0.
+    // El tipo [2:0]u8 significa "un slice que termina en cero".
+    scoreBufferMachine: [2:0]u8 = .{ '0', 0 },
+    scoreBufferPlayer: [2:0]u8 = .{ '0', 0 },
+
+    pub fn getScoreStringMachine(self: *GameState) [:0]const u8 {
+        // Retornamos el slice del buffer que es parte de la estructura
+        return self.scoreBufferMachine[0..];
+    }
+
+    pub fn getScoreStringPlayer(self: *GameState) [:0]const u8 {
+        // Retornamos el slice del buffer que es parte de la estructura
+        return self.scoreBufferPlayer[0..];
+    }
+};
 
 // 4. LÓGICA DE NEGOCIO (Funciones de utilidad)
 // Funciones puras que no dibujan, solo calculan:
@@ -36,6 +53,7 @@ pub fn main() !void {
 
     // Inicialización del estado del juego (configuración Estado del juego)
     rl.setTargetFPS(60);
+    var gameState = GameState{};
 
     while (!rl.windowShouldClose()) {
         rl.beginDrawing();
@@ -59,5 +77,21 @@ pub fn main() !void {
             const y: i32 = @intCast(i * 60);
             rl.drawText("|", screenWidth / 2, y, sizeFontNet, white);
         }
+
+        // Dibujar puntuación máquina y jugador
+        rl.drawText(
+            gameState.getScoreStringMachine(),
+            (screenWidth / 4) - (sizeFontScore / 4),
+            30,
+            sizeFontScore,
+            white,
+        );
+        rl.drawText(
+            gameState.getScoreStringPlayer(),
+            (screenWidth / 4) * 3 - (sizeFontScore / 4),
+            30,
+            sizeFontScore,
+            white,
+        );
     }
 }
