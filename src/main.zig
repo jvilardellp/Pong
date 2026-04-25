@@ -64,6 +64,29 @@ const Paddle = struct {
     }
 };
 
+const Ball = struct {
+    centerX: f32,
+    centerY: f32,
+    radio: f32,
+
+    pub fn init(centerX: f32, centerY: f32, radio: f32) @This() {
+        return .{
+            .centerX = centerX,
+            .centerY = centerY,
+            .radio = radio,
+        };
+    }
+
+    pub fn draw(self: @This()) void {
+        rl.drawCircle(
+            @intFromFloat(self.centerX),
+            @intFromFloat(self.centerY),
+            self.radio,
+            white,
+        );
+    }
+};
+
 // 4. LÓGICA DE NEGOCIO (Funciones de utilidad)
 // Funciones puras que no dibujan, solo calculan:
 // - update Paddle(paddle, input_key)
@@ -95,6 +118,12 @@ pub fn main() !void {
         @as(f32, @floatFromInt(screenHeight)) / 2 - @as(f32, @floatFromInt(paddleHeight)) / 2,
         paddleWidth,
         paddleHeight,
+    );
+    var ball: Ball = Ball.init(
+        // @as(f32, @floatFromInt(screenWidth - 65)),
+        @as(f32, @floatFromInt(screenWidth)) / 4 * 3,
+        @as(f32, @floatFromInt(screenHeight)) / 2,
+        10.0,
     );
 
     while (!rl.windowShouldClose()) {
@@ -139,5 +168,8 @@ pub fn main() !void {
         // Dibujar paletas
         paddleMachine.draw();
         paddlePlayer.draw();
+
+        // Dibujar bola
+        ball.draw();
     }
 }
