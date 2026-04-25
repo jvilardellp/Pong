@@ -120,8 +120,8 @@ pub fn main() !void {
         paddleHeight,
     );
     var ball: Ball = Ball.init(
-        // @as(f32, @floatFromInt(screenWidth - 65)),
-        @as(f32, @floatFromInt(screenWidth)) / 4 * 3,
+        @as(f32, @floatFromInt(screenWidth - 65)),
+        // @as(f32, @floatFromInt(screenWidth)) / 4 * 3,
         @as(f32, @floatFromInt(screenHeight)) / 2,
         10.0,
     );
@@ -133,6 +133,26 @@ pub fn main() !void {
         // 1. Entrada de usuario (Input)
 
         // 2. Actualización de física (Update)
+        // TODO: Verificar colisiones, prueba del sistema de colisiones con la paleta del jugador.
+        // Modificar esta parte mas adelante para verificar colisiones con la paleta de la máquina
+        // y con las paredes.
+        const ballPosition = rl.Vector2{
+            .x = ball.centerX,
+            .y = ball.centerY,
+        };
+        const ballRadius = ball.radio;
+        const paddlePlayerRect = rl.Rectangle{
+            .x = paddlePlayer.positionX,
+            .y = paddlePlayer.positionY,
+            .width = paddlePlayer.width,
+            .height = paddlePlayer.height,
+        };
+
+        if (rl.checkCollisionCircleRec(ballPosition, ballRadius, paddlePlayerRect)) {
+            rl.drawText("Colisión con paleta del jugador", 10, screenHeight - 30, 20, white);
+        } else {
+            rl.drawText("No hay colisión", 10, screenHeight - 30, 20, white);
+        }
 
         // 3. Dibujado (Draw)
         rl.clearBackground(black);
