@@ -46,7 +46,11 @@ pub fn main() !void {
 
         // 3. Dibujado (Draw)
         rl.clearBackground(black);
-        rl.drawText("Pong", 280, 240, 100, white); // Test para verificar que se muestra algo
-        // en pantalla
+
+        // TODO: Eliminar las lineas de referencia una vez terminado el juego.
+        rl.drawLine(screenWidth / 2, 0, screenWidth / 2, screenHeight, rl.Color.red);
+        rl.drawLine(screenWidth / 4, 0, screenWidth / 4, screenHeight, rl.Color.red);
+        rl.drawLine((screenWidth / 4) * 3, 0, (screenWidth / 4) * 3, screenHeight, rl.Color.red);
+        rl.drawLine(0, screenHeight / 2, screenWidth, screenHeight / 2, rl.Color.red);
     }
 }
