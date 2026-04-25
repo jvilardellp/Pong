@@ -11,6 +11,8 @@ const black = rl.Color.black;
 const white = rl.Color.white;
 const sizeFontNet = 30;
 const sizeFontScore = 60;
+const paddleWidth = 10;
+const paddleHeight = 60;
 
 // 3. ESTRUCTURAS DE DATOS (Modelos)
 // Definir los 'objetos' del juego:
@@ -34,6 +36,34 @@ const GameState = struct {
     }
 };
 
+const Paddle = struct {
+    positionX: f32,
+    positionY: f32,
+    width: f32,
+    height: f32,
+    speed: f32,
+
+    pub fn init(positionX: f32, positionY: f32, width: f32, height: f32) @This() {
+        return .{
+            .positionX = positionX,
+            .positionY = positionY,
+            .width = width,
+            .height = height,
+            .speed = 10.0,
+        };
+    }
+
+    pub fn draw(self: @This()) void {
+        rl.drawRectangle(
+            @intFromFloat(self.positionX),
+            @intFromFloat(self.positionY),
+            @intFromFloat(self.width),
+            @intFromFloat(self.height),
+            white,
+        );
+    }
+};
+
 // 4. LÓGICA DE NEGOCIO (Funciones de utilidad)
 // Funciones puras que no dibujan, solo calculan:
 // - update Paddle(paddle, input_key)
@@ -54,6 +84,18 @@ pub fn main() !void {
     // Inicialización del estado del juego (configuración Estado del juego)
     rl.setTargetFPS(60);
     var gameState = GameState{};
+    var paddleMachine: Paddle = Paddle.init(
+        @as(f32, @floatFromInt(50)),
+        @as(f32, @floatFromInt(screenHeight)) / 2 - @as(f32, @floatFromInt(paddleHeight)) / 2,
+        paddleWidth,
+        paddleHeight,
+    );
+    var paddlePlayer: Paddle = Paddle.init(
+        @as(f32, @floatFromInt(screenWidth - 60)),
+        @as(f32, @floatFromInt(screenHeight)) / 2 - @as(f32, @floatFromInt(paddleHeight)) / 2,
+        paddleWidth,
+        paddleHeight,
+    );
 
     while (!rl.windowShouldClose()) {
         rl.beginDrawing();
@@ -93,5 +135,9 @@ pub fn main() !void {
             sizeFontScore,
             white,
         );
+
+        // Dibujar paletas
+        paddleMachine.draw();
+        paddlePlayer.draw();
     }
 }
