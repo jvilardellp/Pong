@@ -49,7 +49,7 @@ const Paddle = struct {
             .positionY = positionY,
             .width = width,
             .height = height,
-            .speed = 10.0,
+            .speed = 200.0,
         };
     }
 
@@ -131,6 +131,18 @@ pub fn main() !void {
         rl.endDrawing();
 
         // 1. Entrada de usuario (Input)
+        if (rl.isGamepadAvailable(0)) {
+            // TODO: Mostrar el nombre del gamepad conectado y un mensaje de confirmación.
+            // Eliminar estas líneas de texto una vez terminado el juego.
+            rl.drawText("Gamepad conectado", 10, screenHeight - 90, 20, white);
+            rl.drawText(rl.getGamepadName(0), 10, screenHeight - 60, 20, white);
+
+            const axisY = rl.getGamepadAxisMovement(0, rl.GamepadAxis.left_y);
+            const deadZone = 0.2; // Zona muerta para evitar movimientos no deseados
+            if (@abs(axisY) > deadZone) {
+                paddlePlayer.positionY += axisY * paddlePlayer.speed * rl.getFrameTime();
+            }
+        }
 
         // 2. Actualización de física (Update)
         // TODO: Verificar colisiones, prueba del sistema de colisiones con la paleta del jugador.
