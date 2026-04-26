@@ -122,7 +122,8 @@ pub fn main() !void {
     var ball: Ball = Ball.init(
         @as(f32, @floatFromInt(screenWidth - 65)),
         // @as(f32, @floatFromInt(screenWidth)) / 4 * 3,
-        @as(f32, @floatFromInt(screenHeight)) / 2,
+        // @as(f32, @floatFromInt(screenHeight)) / 2,
+        @as(f32, 10),
         10.0,
     );
 
@@ -130,7 +131,7 @@ pub fn main() !void {
         rl.beginDrawing();
         rl.endDrawing();
 
-        // 1. Entrada de usuario (Input)
+        // 1.1 Entrada de usuario (Input)
         if (rl.isGamepadAvailable(0)) {
             // TODO: Mostrar el nombre del gamepad conectado y un mensaje de confirmación.
             // Eliminar estas líneas de texto una vez terminado el juego.
@@ -142,6 +143,25 @@ pub fn main() !void {
             if (@abs(axisY) > deadZone) {
                 paddlePlayer.positionY += axisY * paddlePlayer.speed * rl.getFrameTime();
             }
+
+            if (paddlePlayer.positionY < 0) {
+                paddlePlayer.positionY = 0;
+            } else if (paddlePlayer.positionY + paddlePlayer.height > @as(f32, screenHeight)) {
+                paddlePlayer.positionY = @as(f32, screenHeight) - paddlePlayer.height;
+            }
+        }
+
+        // 1.2 Movimiento pala de la máquina (IA básica).
+        // Aproximación simple: la máquina sigue la posición vertical de la bola.
+        if (ball.centerY < paddleMachine.positionY + paddleMachine.height / 2) {
+            paddleMachine.positionY -= paddleMachine.speed * rl.getFrameTime();
+        } else if (ball.centerY > paddleMachine.positionY + paddleMachine.height / 2) {
+            paddleMachine.positionY += paddleMachine.speed * rl.getFrameTime();
+        }
+        if (paddleMachine.positionY < 0) {
+            paddleMachine.positionY = 0;
+        } else if (paddleMachine.positionY + paddleMachine.height > @as(f32, screenHeight)) {
+            paddleMachine.positionY = @as(f32, screenHeight) - paddleMachine.height;
         }
 
         // 2. Actualización de física (Update)
