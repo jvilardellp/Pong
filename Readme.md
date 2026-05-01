@@ -26,8 +26,8 @@ Zig y el bucle de juego (game loop) con Raylib.
 *   **Hito:** Ver los elementos del juego en pantalla, aunque no se muevan.
 
 ### 🏃 Etapa 3: El Movimiento (Input & Update)
-*   [ ] **Sistema de Input:** Implementar la lectura de teclado (`IsKeyDown`) para las paletas.
-*   [ ] **Lógica de Actualización:** Crear funciones que actualicen la posición `y` de las paletas según el input.
+*   [X] **Sistema de Input:** Implementar la lectura de teclado (`IsKeyDown`) para las paletas.
+*   [X] **Lógica de Actualización:** Crear funciones que actualicen la posición `y` de las paletas según el input.
 *   [ ] **Movimiento de la Bola:** Implementar la lógica de velocidad constante para la bola en cada frame.
 *   **Hito:** Poder controlar las paletas con el teclado y ver la bola desplazarse.
 
