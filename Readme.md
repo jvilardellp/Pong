@@ -20,9 +20,9 @@ Zig y el bucle de juego (game loop) con Raylib.
 *   **Hito:** Una ventana negra de resolución fija que se abre y se cierra sin errores.
 
 ### 🎭 Etapa 2: Los Actores (Entities & Rendering)
-*   [x] **Definición de Modelos:** Crear los `structs` para `Paddle` y `Ball`.
-*   [x] **Renderizado Estático:** Dibujar las paletas (rectángulos) y la bola (círculo o cuadrado) en posiciones fijas.
-*   [x] **Gestión de Constantes:** Centralizar tamaños, colores y velocidades en un bloque de constantes.
+*   [X] **Definición de Modelos:** Crear los `structs` para `Paddle` y `Ball`.
+*   [X] **Renderizado Estático:** Dibujar las paletas (rectángulos) y la bola (círculo o cuadrado) en posiciones fijas.
+*   [X] **Gestión de Constantes:** Centralizar tamaños, colores y velocidades en un bloque de constantes.
 *   **Hito:** Ver los elementos del juego en pantalla, aunque no se muevan.
 
 ### 🏃 Etapa 3: El Movimiento (Input & Update)
