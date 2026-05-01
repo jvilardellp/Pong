@@ -4,6 +4,8 @@
 Este documento detalla las etapas de desarrollo para la creación de un clon de Pong utilizando el lenguaje **Zig** y la librería 
 **Raylib**.
 
+![Pantalla del juego](imagenes/pong.png)
+
 ## 🎯 Objetivo del Proyecto
 Crear una versión funcional, modular y eficiente del clásico juego Pong, enfocándose en el aprendizaje de la gestión de memoria en 
 Zig y el bucle de juego (game loop) con Raylib.
